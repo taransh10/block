@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <input type = "text" id = " amount">
+        <p id = 'balance'></p>
+        <button id = 'deposit'>deposit</button>
+        <button id ='withdrawl'>withdraw</button>
+    </div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.4.0/web3.min.js"></script>  
+
+
+	<script>
+        var contract;
+        $(document).ready(function()
+		{
+            web3 = new Web3(web3.currentProvider);
+            var address = "0xd9145CCE52D386f254917e481eB44e9943F39138";
+            var abi =[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "amt",
+				"type": "int256"
+			}
+		],
+		"name": "deposit",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "amt",
+				"type": "int256"
+			}
+		],
+		"name": "withdraw",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getbalance",
+		"outputs": [
+			{
+				"name": "",
+				"type": "int256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+            contract = new web3.eth.Contract(address,abi);
+            contract.methods.getbalance().call().then(function(bal)  {
+                $('#balance').html(bal);
+
+            })
+          
+        })
+
+        $('deposit').click(function()
+        {
+            var amt = 0;
+            amt = parseInt($('#amount').val());
+             
+            web3.eth.getAccounts().then(function(accounts){
+                var acct = accounts [0];
+                return contract .methods.deposit(amt).send({from:acc});
+
+            }).then(function(tx){
+                console.log(tx);
+
+            }).catch(function(tx){
+                console.log(tx);
+            })
+        })
+    </script>
+
+</body>
+</html>

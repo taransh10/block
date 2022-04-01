@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <!-- //this -->
+        <h1 id="heading" class="headclass">Welcome to My WebPage</h1> 
+        <div class="child" id="first">Names</div>
+        <ul class="this" id="myul">
+            <li class="childul" id="fui">Harry</li>
+            <li class="childul" id="lui">Ananya</li>
+            <li class="childul">Ram</li>
+            <li class="childul">Rohan</li>
+        </ul>
+        <!-- <div class="child" id="second">child2</div>
+        <div class="child">child3</div> -->
+    </div>
+    <form action='none.html' method="post">
+        <a href="//codewithharry.com">Go To Code With Harry</a><br><br>
+        Search this website: <input type="text" id="t" name="hello"><br><br>
+        <input type="button" id="btn" value="SUBMIT"><br>
+        <!-- <div class="no">This is a dummy</div> -->
+        <!-- <img src="IMG_7572.jpg" alt="Girl in a Swag" width="800" height="600"> -->
+    </form>
+</body>
+<!-- <script src="advance.js"></script> -->
+<!-- <script src="storage.js"></script> -->
+<!-- <script src="MathdateObject.js"></script> -->
+<!-- <script src="textarea.js"></script> -->
+<!-- <script src="Object.js"></script> -->
+<!-- <script src="library.js"></script> -->
+<br>
+<!-- jquery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<!-- web3 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.4.0/web3.min.js"></script>  
+<script type="text/javascript">
+    async function loadweb3(){
+        if(window.ethereum){
+            window.web3=new Web3(window.ethereum);
+            window.ethereum.enable(); 
+        } 
+    }        
+       
+     async function loadContract(){
+          //ABI & address of owner who deployed it on metamask network in RemixIDE
+        var ABI = [
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "amt",
+				"type": "int256"
+			}
+		],
+		"name": "deposit",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "amt",
+				"type": "int256"
+			}
+		],
+		"name": "withdraw",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getbalance",
+		"outputs": [
+			{
+				"name": "",
+				"type": "int256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+] 
+        var Addresss = '0xd9145CCE52D386f254917e481eB44e9943F39138 ';
+          return await new window.web3.eth.Contract( ABI, Address); 
+      } 
+      
+        
+      async function load(){
+            await loadweb3();
+         window.contract = await loadContract();
+        }
+         
+      
+    load();  
+      
+</script>
+<br>
+
+<input type="text" id="userInputArgument" ><br>                                             
+<button type="button"  onclick="callMethodOne( );"> mOne </button>      
+<script>
+     async function callMethodOne( )
+{
+          var amt = 0;
+
+          //We stored the valued captured by input field through id ="userInputArgument" inside a variable "amt"
+          amt = $('#userInputArgument').val( );    
+                                             
+          web3.eth.getAccounts().then(function(getbalance){
+              var accA = bal[0];
+
+              //Here we call the smart contract method that we defined earlier methodOne(userInputArgument)
+              return contract.methods.methodOne(amt).send({from:accA});                                         
+
+                            
+          })
+ } 
+
+
+</script>
+<br>
+<br>
+<!-- ///////////////////////// Interact with smart contract methods which only shows output without taking any input ///////////////////// -->
+
+<button type="button"  onclick="callMethodTwo( );"> mTwo </button>   
+
+<script>
+ async function callMethodTwo( ){
+
+          const amtB = await window.contract.methods.methodTwo( ).call();                   
+         
+      }
+
+</script>
+</html>
